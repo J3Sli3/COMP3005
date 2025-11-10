@@ -1,5 +1,7 @@
 Python application for CRUD operations on PostgreSQL students table.
 
+Repo : https://github.com/J3Sli3/COMP3005
+
 How to setup
 -----------------------------------------------------------------------------
 
