@@ -135,7 +135,7 @@ class FitnessClubSystem:
             for t in trainers:
                 print(f"{t[0]}. {t[1]} {t[2]}")
 
-            trainer_id = int(input("Trianer ID: "))
+            trainer_id = int(input("Trainer ID: "))
             date = input("Date (YYYY-MM-DD): ")
             start_time = input("Start time (HH:MM): ")
             end_time = input("End time (HH:MM) ")
@@ -305,7 +305,7 @@ class FitnessClubSystem:
                                 Set amount_paid = amount_paid + %s,
                                 status = CASE
                                 WHEN amount_paid + %s >= total_amount THEN 'Paid'
-                                ELSE 'Partial'
+                                ELSE 'Partially'
                                 END,
                                 payment_date = CURRENT_DATE
                                 WHERE bill_id = %s""", (amount, amount, bill_id))

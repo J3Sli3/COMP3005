@@ -1,4 +1,4 @@
--- Health and Fitness Clun Management System
+-- Health and Fitness Club Management System
 -- DML.sql It is a Sample data
 -- Authors: Esli Emmanuel Konate and Joseph Dereje
 
@@ -34,7 +34,7 @@ INSERT INTO Rooms(room_name, room_type, capacity, equipment_available, status) V
 ('Cardio Room', 'Gym Floor', 25, 'Treadmills, Ellipticals, Bikes', 'Available'),
 ('Training Room 1', 'Training Room', 2, 'Personal Training Equipment', 'Available'),
 ('Training Room 2', 'Training Room', 2, 'Personal Training Equipment', 'Available'),
-('Pool Zone', 'Pool', 15, 'Swimming Pool, Lane Dividers','Available'),
+('Pool Zone', 'Pool', 15, 'Swimming Pool, Lane Dividers','Available');
 
 -- Insert Members now
 INSERT INTO Members (email, password, first_name, last_name, date_of_birth, gender, phone, address, emergency_contact,emergency_phone, fitness_goals, target_weight, target_body_fat) VALUES
@@ -46,7 +46,7 @@ INSERT INTO Members (email, password, first_name, last_name, date_of_birth, gend
 ('lisa.davis@email.com', 'password123', 'Lisa', 'Davis', '1987-02-28', 'Female', '613-555-0111', '927 Cedar Ln, Ottawa, ON', 'Mark Davis', '613-555-0112', 'Marathon training', 125.00, 19.00),
 
 -- Insert the trainers
-INSERT INTO Trainers (email, password, first_name, last_name, specilization, certification, phone, hourly_rate) VALUES
+INSERT INTO Trainers (email, password, first_name, last_name, specialization, certification, phone, hourly_rate) VALUES
 ('trainer.bob@fitclub.com', 'trainer123', 'Bob', 'Anderson', 'Weight Training', 'ACE Certified Personal Trainer', '613-555-0201', 75.00),
 ('trainer.alice@fitclub.com', 'trainer123', 'Alice', 'Martinez', 'Yoga and Pilates', 'Pilates Association Certified', '613-555-0202', 65.00),
 ('trainer.chris@fitclub.com', 'trainer123', 'Chris', 'Thompson','Cardio and HIIT', 'CrossFit Certified', '613-555-0203', 70.00),
@@ -166,7 +166,7 @@ INSERT INTO Bills(member_id, bill_date, total_amount, amount_paid, status, descr
 (2, '2024-11-01', 100.00, 100.00, 'Paid', 'Monthly Membership - November 2024', 'Credit Card', '2024-11-01'),
 (3, '2024-11-01', 100.00, 100.00, 'Paid', 'Monthly Membership - November 2024', 'Debit Card', '2024-11-02'),
 (4, '2024-11-01', 100.00, 100.00, 'Paid', 'Monthly Membership - November 2024', 'Credit Card', '2024-11-01'),
-(5, '2024-11-01', 100.00, 50.00, 'Partial', 'Monthly Membership - November 2024', 'Cash', '2024-11-05'),
+(5, '2024-11-01', 100.00, 50.00, 'Partially', 'Monthly Membership - November 2024', 'Cash', '2024-11-05'),
 --This is personal training session fees
 (1, '2024-11-20', 75.00, 75.00, 'Paid', 'Personal Training Session - Finished', 'Credit Card', '2024-11-20'),
 (2, '2024-11-19', 65.00, 65.00, 'Paid', 'Personal Training Session - Finished', 'Credit Card', '2024-11-19'),

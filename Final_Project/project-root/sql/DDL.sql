@@ -48,7 +48,7 @@ CREATE Table Trainers (
     password VARCHAR(255) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
-    specilization VARCHAR(100),
+    specialization VARCHAR(100),
     certification TEXT,
     Phone VARCHAR(20),
     hire_date DATE DEFAULT CURRENT_DATE,
@@ -258,7 +258,7 @@ SELECT
         END IF;
         RETURN NEW;
     END;
-    $$ LANGUAGE plppgsql;
+    $$ LANGUAGE plpgsql;
 
     -- now we create the trigger
     CREATE TRIGGER update_session_bill
@@ -294,9 +294,9 @@ SELECT
     END IF;
     RETURN NEW;
 END;
-$$ LANGUAGE plppgsql;
+$$ LANGUAGE plpgsql;
 
--- Give the right permissions for the role and give select, insert or update on members to member_tole
+-- Give the right permissions for the role and give select, insert or update on members to member_Role
 -- Gives select on classes, trainers, rooms to member_role,
 -- gives Select, insert, update, delete on sessions to trainer_role
 -- gives all on all tables in schema public to admin_role
@@ -304,5 +304,30 @@ CREATE TRIGGER manage_class_enrollment
 AFTER INSERT OR DELETE OR UPDATE OF attendance_status ON Enrollments
 FOR EACH ROW
 EXECUTE FUNCTION update_class_enrollment();
+
+-- creation of roles
+DROP ROLE IF EXISTS member_role;
+CREATE ROLE member_role;
+DROP ROLE IF EXISTS trainer_role;
+CREATE ROLE trainer_role;
+DROP ROLE IF EXISTS admin_role;
+CREATE ROLE admin_role;
+
+-- permissions
+GRANT SELECT, INSERT, UPDATE ON Members TO member_role;
+GRANT SELECT ON Classes, Trainers, Rooms TO member_role;
+GRANT SELECT, INSERT ON Enrollments TO member_role;
+GRANT SELECT, INSERT ON HealthMetrics TO member_role;
+GRANT SELECT ON Bills TO member_role;
+GRANT SELECT, INSERT ON SessionsPossible TO member_role;
+
+GRANT SELECT ON Members TO trainer_role;
+GRANT SELECT, INSERT, UPDATE, DELETE ON SessionsPossible TO trainer_role;
+GRANT SELECT, INSERT, UPDATE ON TrainerAvailability TO trainer_role;
+GRANT SELECT ON Classes, Rooms, Equipment TO trainer_role;
+
+GRANT ALL ON ALL TABLES IN SCHEMA public TO admin_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO admin_role;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO admin_role;
 
 
