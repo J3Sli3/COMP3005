@@ -43,7 +43,7 @@ INSERT INTO Members (email, password, first_name, last_name, date_of_birth, gend
 ('emma.wilson@email.com', 'password123', 'Emma', 'Wilson', '1992-11-30', 'Female', '613-555-0107', '327 Elm St, Ottawa, ON', 'Tom Wilson', '613-555-0108', 'General fitness and flexibility', 130.00, 22.00),
 ('alex.brown@email.com', 'password123', 'Alex', 'Brown', '1995-07-18', 'Other', '613-555-0109', '654 Maple Dr, Ottawa, ON', 'Pat Brown', '613-555-0124', 'Build strength and endurance', 190.00, 12.00),
 ('Dope.Mando@email.com', 'password123', 'Dope', 'Mando', '1995-08-20', 'Male', '613-555-0101', '235 Island Park Dr, Ottawa, ON', 'Meeka Nyla', '613-565-0110', 'Weight loss and toning', 160.00, 18.00),
-('lisa.davis@email.com', 'password123', 'Lisa', 'Davis', '1987-02-28', 'Female', '613-555-0111', '927 Cedar Ln, Ottawa, ON', 'Mark Davis', '613-555-0112', 'Marathon training', 125.00, 19.00),
+('lisa.davis@email.com', 'password123', 'Lisa', 'Davis', '1987-02-28', 'Female', '613-555-0111', '927 Cedar Ln, Ottawa, ON', 'Mark Davis', '613-555-0112', 'Marathon training', 125.00, 19.00);
 
 -- Insert the trainers
 INSERT INTO Trainers (email, password, first_name, last_name, specialization, certification, phone, hourly_rate) VALUES
