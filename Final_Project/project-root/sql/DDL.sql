@@ -2,6 +2,14 @@
 -- Authors: Esli Emmanuel Konate and Joseph Dereje
 -- Course: COMP3005
 
+
+-- Drop the views and functions if they already exist
+DROP VIEW IF EXISTS member_dashboard;
+DROP TRIGGER IF EXISTS update_session_bill ON SessionsPossible;
+DROP TRIGGER IF EXISTS manage_class_enrollment ON Enrollments;
+DROP FUNCTION IF EXISTS create_session_bill();
+DROP FUNCTION IF EXISTS update_class_enrollment() CASCADE;
+DROP INDEX IF EXISTS index_session_datetime;
 -- We drop the tables if they already exist
 DROP TABLE IF EXISTS Enrollments CASCADE;
 DROP TABLE IF EXISTS Bills CASCADE;
@@ -14,11 +22,13 @@ DROP TABLE IF EXISTS Members CASCADE;
 DROP TABLE IF EXISTS Rooms CASCADE;
 DROP TABLE IF EXISTS Equipment CASCADE;
 
--- Drop the views and functions if they already exist
-DROP VIEW IF EXISTS member_dashboard;
-DROP TRIGGER IF EXISTS update_session_bill ON SessionsPossible;
-DROP FUNCTION IF EXISTS create_session_bill();
-DROP INDEX IF EXISTS index_session_datetime;
+
+DROP ROLE IF EXISTS member_role;
+CREATE ROLE member_role;
+DROP ROLE IF EXISTS trainer_role;
+CREATE ROLE trainer_role;
+DROP ROLE IF EXISTS admin_role;
+CREATE ROLE admin_role;
 
 -- Now we will create the tables
 CREATE TABLE Members (
@@ -234,65 +244,65 @@ SELECT
             LIMIT 1
         ) hm on true;
 
-        -- Now we create the function which will trigger for automatic billing whenever a session is booked
-        CREATE OR REPLACE FUNCTION create_session_bill()
-        RETURNS TRIGGER AS $$
-        DECLARE 
-            trainer_rate DECIMAL(10, 2);
-            session_duration DECIMAL(5, 2);
-        BEGIN
-            -- The bill will only be created when a new session was scheduled
-            if NEW.status = 'Scheduled' AND TG_OP = 'INSERT' THEN
-            -- we get the trainer's hourly rate for calculations
-            SELECT hourly_rate INTO trainer_rate
-            FROM Trainers
-            WHERE trainer_id = NEW.trainer_id;
+-- Now we create the function which will trigger for automatic billing whenever a session is booked
+CREATE OR REPLACE FUNCTION create_session_bill()
+RETURNS TRIGGER AS $$
+DECLARE 
+    trainer_rate DECIMAL(10, 2);
+    session_duration DECIMAL(5, 2);
+BEGIN
+    -- The bill will only be created when a new session was scheduled
+    if NEW.status = 'Scheduled' AND TG_OP = 'INSERT' THEN
+    -- we get the trainer's hourly rate for calculations
+    SELECT hourly_rate INTO trainer_rate
+    FROM Trainers
+    WHERE trainer_id = NEW.trainer_id;
 
-            -- now we calculate the length of the session in hours
-            session_duration := EXTRACT(EPOCH FROM (NEW.end_time - NEW.start_time)) / 3600;
-            -- now we make the bill for the session
-            INSERT INTO Bills (member_id, total_amount, description)
-            VALUES (
-                NEW.member_id, trainer_rate * session_duration, 'Personal Training Session with Trainer #' || NEW.trainer_id || ' on ' || new.session_date || ' at ' || new.start_time
-            );
-        END IF;
-        RETURN NEW;
-    END;
-    $$ LANGUAGE plpgsql;
+    -- now we calculate the length of the session in hours
+    session_duration := EXTRACT(EPOCH FROM (NEW.end_time - NEW.start_time)) / 3600;
+    -- now we make the bill for the session
+    INSERT INTO Bills (member_id, total_amount, description)
+    VALUES (
+        NEW.member_id, trainer_rate * session_duration, 'Personal Training Session with Trainer #' || NEW.trainer_id || ' on ' || new.session_date || ' at ' || new.start_time
+    );
+END IF;
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
-    -- now we create the trigger
-    CREATE TRIGGER update_session_bill
-        AFTER INSERT ON SessionsPossible
-        FOR EACH ROW
-        EXECUTE FUNCTION create_session_bill();
+-- now we create the trigger
+CREATE TRIGGER update_session_bill
+AFTER INSERT ON SessionsPossible
+FOR EACH ROW
+EXECUTE FUNCTION create_session_bill();
 
-    -- Add another trigger to update the count of class enrollment
-    CREATE OR REPLACE FUNCTION update_class_enrollment()
-    RETURNS TRIGGER AS $$
-    BEGIN 
-        IF TG_OP = 'INSERT' THEN
-        UPDATE Classes
-        SET current_enrollment = current_enrollment + 1
-        WHERE class_id = NEW.class_id;
+-- Add another trigger to update the count of class enrollment
+CREATE OR REPLACE FUNCTION update_class_enrollment()
+RETURNS TRIGGER AS $$
+BEGIN 
+IF TG_OP = 'INSERT' THEN
+UPDATE Classes
+SET current_enrollment = current_enrollment + 1
+WHERE class_id = NEW.class_id;
 
-        -- now we check if class is full
-        UPDATE Classes
-        SET status = 'Full'
-        WHERE class_id = NEW.class_id
-        AND current_enrollment >= max_capacity;
-        ELSIF TG_OP = 'DELETE' OR (TG_OP = 'UPDATE' AND NEW.attendance_status = 'CANCELLED') THEN
-        UPDATE Classes
-        SET current_enrollment = current_enrollment - 1
-        WHERE class_id = COALESCE(OLD.class_id, NEW.class_id);
+-- now we check if class is full
+UPDATE Classes
+SET status = 'Full'
+WHERE class_id = NEW.class_id
+AND current_enrollment >= max_capacity;
+ELSIF TG_OP = 'DELETE' OR (TG_OP = 'UPDATE' AND NEW.attendance_status = 'CANCELLED') THEN
+UPDATE Classes
+SET current_enrollment = current_enrollment - 1
+WHERE class_id = COALESCE(OLD.class_id, NEW.class_id);
 
-        -- Now We reopen the class if there is still space available
-        UPDATE Classes
-        SET status = 'Open'
-        WHERE class_id = COALESCE(OLD.class_id, NEW.class_id)
-        AND current_enrollment < max_capacity
-        AND class_date >= CURRENT_DATE;
-    END IF;
-    RETURN NEW;
+-- Now We reopen the class if there is still space available
+UPDATE Classes
+SET status = 'Open'
+WHERE class_id = COALESCE(OLD.class_id, NEW.class_id)
+AND current_enrollment < max_capacity
+AND class_date >= CURRENT_DATE;
+END IF;
+RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -305,13 +315,7 @@ AFTER INSERT OR DELETE OR UPDATE OF attendance_status ON Enrollments
 FOR EACH ROW
 EXECUTE FUNCTION update_class_enrollment();
 
--- creation of roles
-DROP ROLE IF EXISTS member_role;
-CREATE ROLE member_role;
-DROP ROLE IF EXISTS trainer_role;
-CREATE ROLE trainer_role;
-DROP ROLE IF EXISTS admin_role;
-CREATE ROLE admin_role;
+
 
 -- permissions
 GRANT SELECT, INSERT, UPDATE ON Members TO member_role;

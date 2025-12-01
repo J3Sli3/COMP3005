@@ -174,14 +174,7 @@ INSERT INTO Bills(member_id, bill_date, total_amount, amount_paid, status, descr
 (1, '2024-11-19', 20.00, 20.00, 'Paid', 'Power Yoga Class', 'Credit Card', '2024-11-19'),
 (3, '2024-11-20', 15.00, 15.00, 'Paid', 'Cardio Dance Class', 'Cash', '2024-11-20');
 
---Now we have to update class enrollment based on enrollments
-UPDATE Classes c
-SET current_enrollment = (
-    SELECT COUNT(*)
-    FROM Enrollments e
-    WHERE e.class_id = class_id
-    AND e.attendance_status != 'Cancelled'
-);
+
 -- Now we add an admin user
 INSERT INTO Members (email, password, first_name, last_name, date_of_birth, gender, phone, membership_stat) VALUES
 ('admin@fitclub.com', 'admin123', 'Admin', 'User', '1980-01-01', 'Other', '613-555-0000', 'Active');
@@ -190,12 +183,12 @@ SELECT 'Members' as table_name, COUNT(*) as count FROM Members
 UNION ALL
 SELECT 'Trainers', COUNT(*) FROM Trainers
 UNION ALL
-SELECT 'Sessions', COUNT(*) FROM SessionsPossible
+SELECT 'SessionsPossible', COUNT(*) FROM SessionsPossible
 UNION ALL
 SELECT 'Classes', COUNT(*) FROM Classes
 UNION ALL
 SELECT 'Enrollments', COUNT(*) FROM Enrollments
 UNION ALL
-SELECT 'Health Metrics', COUNT(*) FROM HealthMetrics
+SELECT 'HealthMetrics', COUNT(*) FROM HealthMetrics
 UNION ALL
 SELECT 'Bills', COUNT(*) FROM Bills;
