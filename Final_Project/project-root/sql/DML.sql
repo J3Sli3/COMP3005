@@ -20,7 +20,7 @@ ALTER SEQUENCE trainers_trainer_id_seq RESTART WITH 1;
 ALTER SEQUENCE rooms_room_id_seq RESTART WITH 1;
 ALTER SEQUENCE equipment_equipment_id_seq RESTART WITH 1;
 ALTER SEQUENCE traineravailability_availability_id_seq RESTART WITH 1;
-ALTER SEQUENCE sessions_session_id_seq RESTART WITH 1;
+ALTER SEQUENCE sessionspossible_session_id_seq RESTART WITH 1;
 ALTER SEQUENCE classes_class_id_seq RESTART WITH 1;
 ALTER SEQUENCE enrollments_enrollment_id_seq RESTART WITH 1;
 ALTER SEQUENCE healthmetrics_metric_id_seq RESTART WITH 1;
