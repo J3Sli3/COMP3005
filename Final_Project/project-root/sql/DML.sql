@@ -115,8 +115,8 @@ INSERT INTO Classes(class_name, description, trainer_id, room_id, class_date, st
 ('Aqua Aerobics', 'Low-impact water workout', 4, 7, '2024-11-28', '11:00', '12:00', 12, 0, 18.00),
 ('Weekend Warriors', 'Total body workout to kickstart your weekend', 3, 1, '2024-11-30', '10:00', '11:00', 20, 0, 20.00),
 -- classes that have occured in the past
-('Power Yoga', 'Advanced yoga practice', 2, 1, '2024-11-19', '18:00', '19:30', 15, 12, 20.00),
-('Cardio Dance', 'Fun dance-based cardio workout', 3, 2, '2024-11-20', '19:00', '20:00', 15, 15, 15.00);
+('Power Yoga', 'Advanced yoga practice', 2, 1, '2024-11-19', '18:00', '19:30', 15, 0, 20.00),
+('Cardio Dance', 'Fun dance-based cardio workout', 3, 2, '2024-11-20', '19:00', '20:00', 15, 0, 15.00);
 --now we have to update the enrollments for previous classes
 UPDATE Classes SET status = 'Finished' WHERE class_date < CURRENT_DATE;
 --now we have to Insert enrollments 
