@@ -9,15 +9,15 @@ Project Description
 A comprehensive database system to manage health and fitness club’s operations. It includes member registration, personal training sessions, group fitness classes, trainer scheduling, equipment maintenance, room bookings, and billing.
 -----------------------------------------------------------------------------------------------
 
-Video Demonstration
+Video Demonstration:
 
-System Requirements
+System Requirements:
 
-PostgreSQL 12+
-Python 3.8+
-psycopg2-binary
+- PostgreSQL 12+
+- Python 3.8+
+- psycopg2-binary
 
-Installation Instructions
+Installation Instructions:
 
 Install Python requirements
 
@@ -36,7 +36,7 @@ Database Setup
 
 
 
-Configure the connection to Database
+Configure the connection to Database:
 	
 
 In fitness_app.py, update the connection infos
@@ -54,36 +54,36 @@ Features:
 
 4 Member Functions 
 
-User Registration: Create new member account with unique email.
-Profile management: Update fitness goals and log health metrics.
-Dashboard View: View personal stats, upcoming sessions, and balance.
-PT Session Booking: Schedule personal training sessions.
+- User Registration: Create new member account with unique email.
+- Profile management: Update fitness goals and log health metrics.
+- Dashboard View: View personal stats, upcoming sessions, and balance.
+- PT Session Booking: Schedule personal training sessions.
 
 2 Trainer Functions 
 
-Set Availability: Sets working hours and availability.
-Member Search: Look up member profiles by name.
+- Set Availability: Sets working hours and availability.
+- Member Search: Look up member profiles by name.
 
 4 Admin Functions
 
-Room Booking Management: View and manage facility bookings.
-Equipment Maintenance: Track and update status of equipments
-Class Schedule Management: Create and manage group fitness classes
-Payment Processing: Handle member billing and payments
+- Room Booking Management: View and manage facility bookings.
+- Equipment Maintenance: Track and update status of equipments
+- Class Schedule Management: Create and manage group fitness classes
+- Payment Processing: Handle member billing and payments
 
 -----------------------------------------------------------------------------------------------
 
 Constraints:
 
-No double-booking 
-Automatic billing for sessions
-Class enrollment capacity management
-No conflicts in terms of trainer availabilities
+- No double-booking,
+- Automatic billing for sessions
+- Class enrollment capacity management
+- No conflicts in terms of trainer availabilities
 
 Technologies Used
 
-PostgreSQL (Database)
-Python 3 (Application Logic)
-Psycopg2 (Connect to Database)
-SQL (DDL, DML, Queries)
+- PostgreSQL (Database)
+- Python 3 (Application Logic)
+- Psycopg2 (Connect to Database)
+- SQL (DDL, DML, Queries)
 
