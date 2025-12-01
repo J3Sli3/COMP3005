@@ -45,7 +45,7 @@ In fitness_app.py, update the connection infos
 		dbname=”fitness_club”
 		user=”postgres” // here input your PostgreSQL username
 		password=”password” // here input your PostgreSQL password
-		host3=”localhost”
+		host=”localhost”
 		port =”5432”
 3. Run the Application
 
