@@ -119,7 +119,6 @@ INSERT INTO Classes(class_name, description, trainer_id, room_id, class_date, st
 ('Cardio Dance', 'Fun dance-based cardio workout', 3, 2, '2024-11-20', '19:00', '20:00', 15, 15, 15.00);
 --now we have to update the enrollments for previous classes
 UPDATE Classes SET status = 'Finished' WHERE class_date < CURRENT_DATE;
-UPDATE Classes SET status = 'Full', current_enrollment = 15 WHERE class_id = 7;
 --now we have to Insert enrollments 
 INSERT INTO Enrollments (member_id, class_id, attendance_status) VALUES
 --enrollments for future classes
