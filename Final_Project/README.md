@@ -12,6 +12,8 @@ A comprehensive database system to manage health and fitness club’s operations
 
 Video Demonstration:
 
+Posted On Brightspace!!!!
+
 System Requirements:
 
 - PostgreSQL 12+
