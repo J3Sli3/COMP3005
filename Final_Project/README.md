@@ -12,7 +12,10 @@ A comprehensive database system to manage health and fitness club’s operations
 
 Video Demonstration:
 
-Posted On Brightspace!!!!
+- Posted On Brightspace 
+- ER Diagram Video link : https://youtu.be/gGzedNp56BE 
+
+You should first watch the first 1:30 min of the uploaded video and leave to watch the ER diagram video posted on youtube once prompted. After watch the Full ER video you can comeback and watch the remainder of the uploaded video.
 
 System Requirements:
 
